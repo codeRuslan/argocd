@@ -16,6 +16,7 @@ spec:
         fullnameOverride: "kuard-wa"
         image:
           tag: "1"
+        replicaCount: 3
         env:
           WEBACAD: "staging"
           GROUP: "2807"
