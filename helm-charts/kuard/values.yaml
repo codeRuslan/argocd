@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: gcr.io/kuar-demo/kuard-amd64
+  repository: gcr.io/kuar-demo/kuard-amd64:1
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "none"
@@ -13,6 +13,9 @@ image:
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
+
+env:
+  FOO: "BAR"
 
 serviceAccount:
   # Specifies whether a service account should be created

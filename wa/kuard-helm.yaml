@@ -16,6 +16,9 @@ spec:
         fullnameOverride: "kuard-wa"
         image:
           tag: "1"
+        env:
+          WEBACAD: "staging"
+          GROUP: "2807"
         ingress:
           enabled: true
           annotations: {}
