@@ -2,7 +2,8 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: hpa-kuard-memory
+  name: kuard-wa
+  namespace: demo
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
