@@ -2,27 +2,35 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "kuard.fullname" . }}
-  labels:
-    {{- include "kuard.labels" . | nindent 4 }}
+  name: kuard-wa
+  namespace: demo
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "kuard.fullname" . }}
-  minReplicas: {{ .Values.autoscaling.minReplicas }}
-  maxReplicas: {{ .Values.autoscaling.maxReplicas }}
+    name: kuard-wa
+  minReplicas: 1
+  maxReplicas: 5
   metrics:
-    {{- if .Values.autoscaling.targetCPUUtilizationPercentage }}
     - type: Resource
       resource:
         name: cpu
-        targetAverageUtilization: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
-    {{- end }}
-    {{- if .Values.autoscaling.targetMemoryUtilizationPercentage }}
-    - type: Resource
-      resource:
+        target:
+          type: Utilization
+          averageUtilization: "20"
         name: memory
-        targetAverageUtilization: {{ .Values.autoscaling.targetMemoryUtilizationPercentage }}
-    {{- end }}
+        target:
+          type: Utilization
+          averageValue: "80"
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 30
+      policies:
+      - type: Pods
+        value: 2
+        periodSeconds: 60
+      - type: Percent
+        value: 10
+        periodSeconds: 60
+      selectPolicy: Max
 {{- end }}
