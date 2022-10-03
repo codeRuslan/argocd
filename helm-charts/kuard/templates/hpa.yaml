@@ -1,4 +1,3 @@
-{{- if .Values.autoscaling.enabled }}
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -16,7 +15,7 @@ spec:
       resource:
         name: cpu
         target:
-          type: AverageValue
+          type: Utilization
           averageUtilization: "20"
         name: memory
         target:
@@ -33,4 +32,3 @@ spec:
         value: 10
         periodSeconds: 60
       selectPolicy: Max
-{{- end }}
